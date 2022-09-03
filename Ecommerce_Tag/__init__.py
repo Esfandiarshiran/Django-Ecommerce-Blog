@@ -1,0 +1,1 @@
+default_app_config = 'Ecommerce_Tag.apps.EcommerceTagConfig'

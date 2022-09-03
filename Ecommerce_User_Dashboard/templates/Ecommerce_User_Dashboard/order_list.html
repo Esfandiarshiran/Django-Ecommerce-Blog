@@ -1,0 +1,71 @@
+{% extends 'dashboard_shared/_base_dashboard.html' %}
+{% load static %}
+
+{% block dashboard_content %}
+    <div id="main-wrapper">
+
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Hello <span style="color: green">{{ user_name }} </span>, This is your orders</h5>
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 30%">Product Title</th>
+                                                <th style="width: 25%">Download</th>
+                                                <th style="width: 20%">Invoice</th>
+                                                <th style="width: 5%">Price</th>
+                                                <th style="width: 7%">Discount</th>
+                                                <th style="width: 33%">Date(M/D)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for order, product in orders.items %}
+                                                <tr>
+                                                <td> <a href="{{ product.get_absolute_url}}" style="color: green;text-align: center">{{ product }} </a></td>
+                                                <td> <a href="" style="color: red;text-align: center">Download Link</a></td>
+                                                <td></td>
+                                                <td style="color: blue;text-align: center"> <h5>{{ order.price }}</h5> </td>
+                                                <td style="color: red;text-align: center"> <h5>% {{ order.discount }}</h5> </td>
+                                                <td style="color: blue;text-align: center"> <h5>{{ order.buy_date.month }}/{{ order.buy_date.day }}</h5> </td>
+                                                </tr>
+                                                {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+        </div>
+
+
+{% endblock %}

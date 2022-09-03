@@ -1,0 +1,1 @@
+default_app_config = 'Ecommerce_about_us.apps.EcommerceAboutUsConfig'

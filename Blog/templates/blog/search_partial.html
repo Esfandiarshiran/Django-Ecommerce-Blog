@@ -1,0 +1,9 @@
+
+<div class="form">
+
+    <form style="width: 265px" action="/blog/search/" method="post">
+            {% csrf_token %}
+            {{ search_form.words}}
+            <a class="button" href="/blog/search/"><i class="fa fa-search"></i></a>
+    </form>
+</div>

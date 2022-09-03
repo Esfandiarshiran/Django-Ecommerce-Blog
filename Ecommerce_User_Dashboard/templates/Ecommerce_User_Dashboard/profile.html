@@ -1,0 +1,105 @@
+{% extends 'dashboard_shared/_base_dashboard.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block dashboard_content %}
+
+    <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <form method="post" action="/dashboard/profile/" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <form class="form-horizontal">
+                                <div class="card-body">
+                                    <h4 class="card-title">Personal Info</h4>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">First Name <span style="color: red">*</span></label>
+                                        <div class="col-sm-9">
+                                                {{ form.first_name |add_class:"form-control" }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">Last Name <span style="color: red">*</span></label>
+                                        <div class="col-sm-9">
+                                            {{ form.last_name |add_class:"form-control" }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email1" class="col-sm-3 text-right control-label col-form-label">Email <span style="color: red">*</span> </label>
+                                        <div class="col-sm-9">
+                                            {{ form.email |add_class:"form-control" }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Message</label>
+                                        <div class="col-sm-9">
+                                            {{ form.talk |add_class:"form-control" }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Profile Picture</label>
+                                        <div class="col-sm-9" >
+                                            {{ form.profile_picture |add_class:"form-control" }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title m-b-0">Personal info</h5>
+                                <div class="form-group m-t-20">
+                                    <label>Birth Day <small class="text-muted">dd/mm/yyyy</small></label>
+                                        {{ form.birth_day |add_class:"form-control" }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone <small class="text-muted">(999) 999-9999</small></label>
+                                    {{ form.phone |add_class:"form-control" }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Mobile <small class="text-muted">+19 999 999 999</small></label>
+                                    {{ form.mobile |add_class:"form-control" }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Sex <small class="text-muted">Select one </small></label>
+                                    {{ form.sex |add_class:"form-control" }}
+                                </div>
+                                  <div class="form-group">
+                                    {{ form.captcha |add_class:"form-control" }}
+                                      {% for error in form.captcha.errors %}
+                                               <p style="color: red">{{ error }}</p>
+                                     {% endfor %}
+                                </div>
+                            </div>
+                            <div class="border-top">
+                                <div class="card-body">
+                                    <button style="background-color: #F7941D" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                </form>
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+</div>
+
+{% endblock %}

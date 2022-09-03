@@ -1,0 +1,32 @@
+{% extends 'shared/_Mainlayout.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href={% static "css/about-us.css" %}>
+    <div class="about-section" style="background-color: #333;color: whitesmoke">
+  <h1>About Us </h1>
+  <p>{{introduce}}</p>
+
+</div>
+<P>
+{{ description|safe }}
+</P>
+<h2 style="text-align:center">Our Team</h2>
+<div class="row">
+ {% for member in team_members %}
+  <div class="column">
+    <div class="card">
+      <img src="{{ member.picture.url }}" alt="Jane" style="width:200px; height: 150px ">
+      <div class="container">
+        <h2>{{ member.title }}</h2>
+        <p class="title">{{ member.job_title }}</p>
+        <p>{{ member.introduce }}</p>
+        <p>{{ member.email }}</p>
+{#        <p><button href="/contact" class="btn-warning">Contact</button></p>#}
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

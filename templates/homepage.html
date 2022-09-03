@@ -1,0 +1,176 @@
+{% extends 'shared/_Mainlayout.html' %}
+{% load static %}
+{% load render_partial %}
+{% block content %}
+
+	<!-- Slider Area -->
+         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                      {% for slider in sliders %}
+                        <div class="carousel-item {{ forloop.first|yesno:'active, ' }}">
+                          <img class="d-block w-100" src="{{ slider.picture.url }}" alt="First slide">
+                        </div>
+                      {% endfor %}
+
+                      </div>
+                      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                  </a>
+        </div>
+	<!--/ End Slider Area -->
+
+
+	<!-- Start Most Popular -->
+	<div class="product-area most-popular section">
+        <div class="container">
+            <div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<h5>Hot Items</h5>
+					</div>
+				</div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="owl-carousel popular-slider">
+                        {% for hot in hot_items %}
+						<!-- Start Single Product -->
+						<div class="single-product">
+							<div class="product-img">
+								<a href="{{ hot.get_absolute_url }}">
+									<img class="default-img" src="{{ hot.picture.url }}" alt="Hot-picture" style="height: 200px;width: 200px">
+									<img class="hover-img" src="{{ hot.picture.url }}" alt="Hot_picture" style="height: 200px;width: 200px">
+									<span class="out-of-stock">Hot</span>
+								</a>
+								<div class="button-head">
+									<div class="product-action">
+{#										<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>#}
+										<a title="Wishlist" href="/dashboard/products/add-to-wishlist/{{ hot.id }}/{{ request.user.id }}"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
+									</div>
+									<div class="product-action-2">
+										<a title="Add to cart" href="/add-item-to-cart/{{ hot.id }}">Add to cart</a>
+									</div>
+								</div>
+							</div>
+							<div class="product-content">
+								<h3><a href="{{ hot.get_absolute_url }}">{{ hot.title }}</a></h3>
+								<div class="product-price">
+									<span class="old">${{ hot.discount }}</span>
+									<span>${{ hot.price }}</span>
+								</div>
+							</div>
+						</div>
+						<!-- End Single Product -->
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- End Most Popular Area -->
+
+
+	<!-- Start Shop Blog  -->
+	<section class="shop-blog section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<h2> Most Popular Posts From Our Blog</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+                {% for post in popular_posts_context %}
+				<div class="col-lg-4 col-md-6 col-12">
+					<!-- Start Single Blog  -->
+					<div class="shop-single-blog">
+						<img src="{{ post.picture.url }}" alt="#">
+						<div class="content">
+							<p class="date">{{ post.publish_date }}</p>
+							<a href="{{ post.get_absolute_url }}" class="title">{{ post.title }}</a>
+							<a href="{{ post.get_absolute_url }}" class="more-btn">Continue Reading</a>
+						</div>
+					</div>
+					<!-- End Single Blog  -->
+				</div>
+                {% endfor %}
+			</div>
+		</div>
+	</section>
+	<!-- End Shop Blog  -->
+
+	<!-- Start Shop Services Area -->
+	<section class="shop-services section home">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6 col-12">
+					<!-- Start Single Service -->
+					<div class="single-service">
+						<i class="ti-rocket"></i>
+						<h4>Free shiping</h4>
+						<p>Orders over $100</p>
+					</div>
+					<!-- End Single Service -->
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<!-- Start Single Service -->
+					<div class="single-service">
+						<i class="ti-reload"></i>
+						<h4>Free Return</h4>
+						<p>Within 30 days returns</p>
+					</div>
+					<!-- End Single Service -->
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<!-- Start Single Service -->
+					<div class="single-service">
+						<i class="ti-lock"></i>
+						<h4>Sucure Payment</h4>
+						<p>100% secure payment</p>
+					</div>
+					<!-- End Single Service -->
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<!-- Start Single Service -->
+					<div class="single-service">
+						<i class="ti-tag"></i>
+						<h4>Best Peice</h4>
+						<p>Guaranteed price</p>
+					</div>
+					<!-- End Single Service -->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Shop Services Area -->
+
+	<!-- Start Shop Newsletter  -->
+	<section class="shop-newsletter section">
+		<div class="container">
+			<div class="inner-top">
+				<div class="row">
+					<div class="col-lg-8 offset-lg-2 col-12">
+						<!-- Start Newsletter Inner -->
+						<div class="inner">
+							<h4>Newsletter</h4>
+							<p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
+							<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+								<input name="EMAIL" placeholder="Your email address" required="" type="email">
+								<button class="btn">Subscribe</button>
+							</form>
+						</div>
+						<!-- End Newsletter Inner -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Shop Newsletter -->
+
+{% endblock %}

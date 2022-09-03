@@ -1,0 +1,97 @@
+{% extends 'shared/_Mainlayout.html' %}
+{% load static %}
+{% block content %}
+
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+                    <Hr>
+                    {% if sent %}
+                         <h5 class="heading-section" style="color: #F7941D">Email has been sent successfully</h5>
+                        <br>
+                        <p> {{ post.title }} has been sent to {{ form.cleaned_data.to }}</p><a href="{{ post.get_absolute_url }}"><p> Back to post</p></a>
+
+
+
+					{% else %}
+                        <h5 class="heading-section" style="color: #F7941D">Share {{ post.title }} to your friend </h5>
+                    {% endif %}
+                    <hr>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-12 col-lg-10">
+					<div class="wrap d-md-flex">
+						<div class="img"  style="margin-right:50px" >
+                            <img width="500" height="500" src={% static 'images/registerpic.png' %} alt="login-pic">
+                            <p style="margin-left: 60px;color: #F7941D"> Meet us on Social Media</p>
+                            <p ></p>
+                            <div class="w-100" >
+									<p class="social-media d-flex justify-content-end" style="margin-right: 100px">
+										<a href="{{ facebook_url }}" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook , fa-4x" style="margin-right: 30px; "></span></a>
+
+										<a href="{{ twitter_url }}" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter fa-4x" style="margin-right: 30px"></span></a>
+
+                                        <a href="{{ instagram_url }}" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-instagram fa-4x" style="margin-right: 30px"></span></a>
+									</p>
+                            </div>
+
+			      </div>
+						<div class="login-wrap p-4 p-md-5">
+			      	<div class="d-flex">
+			      		<div class="w-100">
+			      		</div>
+
+			      	</div>
+                        {% if sent %}
+
+                        {% else %}
+                            <form method="post" style="margin-left: 150px; margin-bottom: 50px">
+                        {% csrf_token %}
+			      		<div class="form-group mb-3">
+
+			      			<label class="label" >{{ form.name.label }}</label>
+                                {{ form.name }}
+                                {% for error in form.name.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+
+			      		</div>
+		                 <div class="form-group mb-3">
+			      			<label class="label">{{ form.email.label }}</label>
+                                {{ form.email }}
+                                {% for error in form.email.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+
+			      		</div>
+                        <div class="form-group mb-3">
+			      			<label class="label">{{ form.to.label }}</label>
+                                {{ form.to }}
+                                {% for error in form.to.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+
+			      		</div>
+                         <div class="form-group mb-3">
+			      			<label class="label">{{ form.comments.label }}</label>
+                                {{ form.comments }}
+                                {% for error in form.comments.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+			      		</div>
+		            <div class="form-group">
+                         <input type = hidden name="next" value="{{ next }}"/>
+		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Send</button>
+		            </div>
+		          </form>
+                        {% endif %}
+
+		        </div>
+		      </div>
+				</div>
+			</div>
+		</div>
+</section>
+{% endblock %}

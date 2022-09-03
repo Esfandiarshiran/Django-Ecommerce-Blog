@@ -1,0 +1,154 @@
+{% extends 'shared/_Mainlayout.html' %}
+{% load static %}
+{% block content %}
+
+<link href=" {% static 'css/product-detail.css' %}" rel="stylesheet" id="bootstrap-css">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{#<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>#}
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>eCommerce Product Detail</title>
+    <link href="{% static 'css/product-detail.css' %}" rel="stylesheet">
+    <link href="{% static 'css/product-detail.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+	<div class="container">
+		<div class="card" style="background: white">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6" style="margin-top: 10px">
+                        <ul class="preview-thumbnail nav nav-tabs" >
+
+                        <li class="active"><a data-target="#pic-0" data-toggle="tab"><img src="{{ product.picture.url }}"/></a></li>
+                            {% for item in gallery %}
+                                {% if forloop.counter  < 4 %}
+                                <li><a data-target="#pic-{{ forloop.counter  }}" data-toggle="tab"><img src="{{ item.picture.url}}" /></a></li>
+                                {% endif %}
+                            {% endfor %}
+						</ul>
+                        <hr>
+
+						<div class="preview-pic tab-content">
+                            <div class="tab-pane active" id="pic-0"><img src="{{ product.picture.url }}" /></div>
+                                {% for item in gallery %}
+                                     {% if forloop.counter  < 4 %}
+                                     <div class="tab-pane" id="pic-{{ forloop.counter  }}"><img src="{{ item.picture.url }}" /></div>
+                                    {% endif %}
+                                {% endfor %}
+						</div>
+
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title" style="color: #F7941D">{{ product.title }}</h3>
+						<div class="rating">
+							<div class="stars">
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+							</div>
+							<span class="review-no">41 reviews</span>
+						</div>
+						<p class="product-description">{{ product.features| safe }}</p>
+						<h4 class="price" style="color: #F7941D">current price: <span style="color: red"> $ {{ product.price }}</span></h4>
+						<p class="vote"><strong style="color: #F7941D">91%</strong> of buyers enjoyed this product! <strong style="color: #F7941D">(87 votes)</strong></p>
+
+						<div class="action" >
+                            <form method="post" action="/add-item-to-cart/{{ product.id }}/" >
+                                    {% csrf_token %}
+                                    <div>
+                                    <p>
+                                        <p style="margin-bottom: 10px">Enter Count of Product : </p>
+                                    </p>
+
+                                    </div>
+                                    <div>
+                                        {{ new_order_form.product_id }}
+                                        <p style="margin-bottom: 10px">
+                                        {{ new_order_form.count }}
+                                       <button  class=" btn btn-warning" type="submit" style="width:200px;height:37px;background-color: #F7941D">add to cart</button>
+                                    <p>
+                                    </div>
+                            </form>
+{#                            <button class="like btn btn-default" type="submit"><span class="fa fa-heart"></span></button>#}
+
+						</div>
+					</div>
+				</div>
+			</div>
+            <hr>
+        <h5 style="color: #F7941D">Descriptions :</h5>
+        <hr>
+        <p>{{ product.description| safe }}</p>
+        <hr>
+            <div class="product-area most-popular section">
+        <div class="container">
+            <div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<h5 style="color: #F7941D">recommendation products</h5>
+					</div>
+				</div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="owl-carousel popular-slider">
+                        {% for product in related_products %}
+						<!-- Start Single Product -->
+						<div class="single-product">
+							<div class="product-img">
+								<a href="{{ product.get_absolute_url }}">
+									<img class="default-img" src="{{ product.picture.url }}" alt="Hot-picture">
+									<img class="hover-img" src="{{ product.picture.url }}" alt="Hot_picture">
+									<span class="out-of-stock">Recommended</span>
+								</a>
+								<div class="button-head">
+									<div class="product-action">
+										<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+										<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
+									</div>
+									<div class="product-action-2">
+
+									</div>
+								</div>
+							</div>
+							<div class="product-content">
+								<h3><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
+								<div class="product-price">
+									<span class="old">${{ product.discount }}</span>
+									<span>${{ product.price }}</span>
+								</div>
+							</div>
+						</div>
+						<!-- End Single Product -->
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+		</div>
+	</div>
+
+  <hr>
+
+  <hr>
+
+  </body>
+</html>
+
+
+
+
+{% endblock %}

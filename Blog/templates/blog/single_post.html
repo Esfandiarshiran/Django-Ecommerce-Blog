@@ -1,0 +1,201 @@
+{% extends 'shared/_Mainlayout.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Start Blog Single -->
+    <section class="blog-single section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-12">
+						<div class="blog-single-main">
+							<div class="row">
+								<div class="col-12">
+									<div class="image">
+										<img src="https://via.placeholder.com/950x460" alt="#">
+									</div>
+									<div class="blog-detail">
+										<h2 class="blog-title">{{ post.title }}</h2>
+										<div class="blog-meta">
+											<span class="author"><a href="#"><i class="fa fa-user"></i>{{ post.author.username }}</a><a href="#"><i class="fa fa-calendar"></i>{{ post.publish_date }}</a><a href="#"><i class="fa fa-comments"></i>Comment ({{ comments_count }})</a><a href="/blog/post_share/{{ post.id }}"><i class="fa fa-share"></i>Share This post by Email</a></span>
+										</div>
+										<div class="content">
+                                            {{ post.body|safe|linebreaks }}
+										</div>
+									</div>
+									<div class="share-social">
+										<div class="row">
+											<div class="col-12">
+												<div class="content-tags">
+													<h4>Tags:</h4>
+													<ul class="tag-inner">
+{#                                                        {% if post_tags %}#}
+                                                        {% for item in post_tags %}
+														<li><a href="/blog/tag/{{ item.slug }}">{{ item.name }}</a></li>
+                                                        {% endfor %}
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="comments">
+										<h3 class="comment-title">Comments ({{ comments_count }})</h3>
+                                        {% for comment in comments %}
+										<!-- Single Comment -->
+										<div class="single-comment">
+											<img src="https://via.placeholder.com/80x80" alt="#">
+											<div class="content">
+												<h4>{{ comment.name }} <span>{{ comment.created }}</span></h4>
+												<p>{{ comment.body|linebreaks }}</p>
+
+											</div>
+										</div>
+                                            {% empty %}
+                                            <P style="color: #F7941D;text-align: center">There is no comment yet</P>
+										<!-- End Single Comment -->
+                                        {% endfor %}
+
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="reply">
+										<div class="reply-head">
+											<h2 class="reply-title">Leave a Comment</h2>
+                                            {% if not request.user.is_authenticated %}
+                                                <p>For leaving comments you have to be  <a href="/account/login" style="color: red">Login.</a></p>
+                                            {% endif %}
+                                            {% if new_comment %}
+                                                <p style="color: #F7941D">Your comment has been added</p>
+{#                                                {% if no user.au %}#}
+                                            {% endif %}
+											<!-- Comment Form -->
+											<form class="form" method="post" action="#">
+                                                {% csrf_token %}
+												<div class="row">
+													<div class="col-lg-6 col-md-6 col-12">
+														<div class="form-group">
+															<label>Your Name<span>*</span></label>
+															{{ comment_form.name }}
+														</div>
+													</div>
+													<div class="col-lg-6 col-md-6 col-12">
+														<div class="form-group">
+															<label>Your Email<span>*</span></label>
+															{{ comment_form.email }}
+														</div>
+													</div>
+													<div class="col-12">
+														<div class="form-group">
+															<label>Your Message<span>*</span></label>
+															{{ comment_form.body }}
+														</div>
+													</div>
+													<div class="col-12">
+														<div class="form-group button">
+															<button type="submit" class="btn">Post comment</button>
+														</div>
+													</div>
+												</div>
+											</form>
+											<!-- End Comment Form -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-12">
+						<div class="main-sidebar">
+							<!-- Single Widget -->
+							<div class="single-widget search">
+								<div class="form">
+									<input type="email" placeholder="Search Here...">
+									<a class="button" href="#"><i class="fa fa-search"></i></a>
+								</div>
+							</div>
+							<!--/ End Single Widget -->
+							<!-- Single Widget -->
+							<div class="single-widget category">
+								<h3 class="title">Blog Categories</h3>
+								<ul class="categor-list">
+                                    {% for cat in blog_categories_context %}
+									<li><a href="/blog/category/{{ cat.slug }}">{{ cat.title }}</a></li>
+                                    {% endfor %}
+								</ul>
+							</div>
+							<!--/ End Single Widget -->
+							<!-- Single Widget -->
+							<div class="single-widget recent-post">
+								<h3 class="title">Recent post</h3>
+                                {% for post in recent_posts_context %}
+								<!-- Single Post -->
+								<div class="single-post">
+									<div class="image">
+										<img src="{{ post.picture.url }}" alt="#">
+									</div>
+									<div class="content">
+										<h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5>
+										<ul class="comment">
+											<li><i class="fa fa-calendar" aria-hidden="true"></i>{{ post.publish_date }}</li>
+											<li><i class="fa fa-commenting-o" aria-hidden="true"></i>{{ post.comments.count }}</li>
+										</ul>
+									</div>
+								</div>
+								<!-- End Single Post -->
+                                {% endfor %}
+							</div>
+							<!--/ End Single Widget -->
+                            <!-- Single Widget -->
+							<div class="single-widget recent-post">
+								<h3 class="title">Related post</h3>
+                                {% for post in similar_posts %}
+								<!-- Single Post -->
+								<div class="single-post">
+									<div class="image">
+										<img src="{{ post.picture.url }}" alt="#">
+									</div>
+									<div class="content">
+										<h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5>
+										<ul class="comment">
+											<li><i class="fa fa-calendar" aria-hidden="true"></i>{{ post.publish_date }}</li>
+											<li><i class="fa fa-commenting-o" aria-hidden="true"></i>{{ post.comments.count }}</li>
+										</ul>
+									</div>
+								</div>
+								<!-- End Single Post -->
+                                {% endfor %}
+
+							</div>
+							<!--/ End Single Widget -->
+							<!-- Single Widget -->
+							<div class="single-widget side-tags">
+								<h3 class="title">Tags</h3>
+								<ul class="tag">
+                                    {% for tag in blog_tags_context %}
+									<li><a href="/blog/tag/{{ tag.slug }}">{{ tag }}</a></li>
+                                    {% endfor %}
+								</ul>
+							</div>
+							<!--/ End Single Widget -->
+							<!-- Single Widget -->
+							<div class="single-widget newsletter">
+								<h3 class="title">Newslatter</h3>
+								<div class="letter-inner">
+									<h4>Subscribe & get news <br> latest updates.</h4>
+									<div class="form-inner">
+										<input type="email" placeholder="Enter your email">
+										<a href="#">Submit</a>
+									</div>
+								</div>
+							</div>
+							<!--/ End Single Widget -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+    <!--/ End Blog Single -->
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'dashboard_shared/_base_dashboard.html' %}
+{% load static %}
+
+{% block dashboard_content %}
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Hello <span style="color: green">{{ user_name }} </span>, This is your Wish List</h5>
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40%">Product Title</th>
+                                                <th style="width: 15%">Price</th>
+                                                <th style="width: 15%">Discount</th>
+                                                <th style="width: 15%">Add To Cart</th>
+                                                <th style="width: 5%">Del</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for product in products %}
+                                            <tr>
+                                                <td> <a href="{{ product.get_absolute_url }}">{{ product.title }}</a></td>
+                                                <td>{{ product.price }}</td>
+                                                <td>%{{ product.discount }}</td>
+                                                <td> <a href="/dashboard/wish-list/add/{{ product.id }}/{{ request.user.id }}/" style="color: green;text-align: center"><h1>+</h1> </a></td>
+                                                <td> <a href="/dashboard/wish-list/delete/{{ product.id }}/{{ request.user.id}}/" style="color: red;text-align: center"><h2>X</h2> </a></td>
+                                            {% endfor %}
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+
+                                              <th style="width: 10%;"><a style="color: red" href="/dashboard/wish-list/delete/all/{{ user_id_in_wishlist }}/True/">Delete All</a>  items, or <a style="color: red" href="/dashboard/wish-list/add/all/{{ request.user.id }}/True">Add All </a> of them to Cart </th>
+
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+        </div>
+{% endblock %}
