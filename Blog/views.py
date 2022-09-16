@@ -16,7 +16,7 @@ from Ecommerce_setting.models import SiteSetting
 #     paginate_by = 3
 #     template_name = 'blog/post/list.html'
 
-
+# Pagination for function based view (FBV)
 def pagination(request, object_list, number_of_post=6):
     # Start pagination in function based view (FBV).
     paginator = Paginator(object_list, number_of_post)
@@ -33,7 +33,7 @@ def pagination(request, object_list, number_of_post=6):
     # Passing all objects to templates for using them.
     return {'object_items': posts_object, 'pages': int(page_number)}
 
-
+# Fetch All posts, or Search in them, and show in the same page(Post_list_page)
 def post_list(request):
     # All Post in DB
     posts_list = Post.published.all()
