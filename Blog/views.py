@@ -44,7 +44,7 @@ def post_list(request):
         posts_list = Post.searched.search(words)
     # Pagination
     temp_pagination = pagination(request=request, object_list=posts_list)
-
+    # Pass search form, and Paginations to for rendering to post list template
     contex = {
         'posts': temp_pagination['object_items'],
         'pages': temp_pagination['pages'],
@@ -53,7 +53,7 @@ def post_list(request):
 
     return render(request, 'blog/posts_list.html', contex)
 
-
+# Show detail for every single post
 def post_detail(request, post_id, slug):
     # Getting post with post id that given by urls (ex: /blog/post_id/post_title).
     post = get_object_or_404(Post, id=post_id)
